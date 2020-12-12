@@ -1,0 +1,29 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %} 
+<body onload="myMove()" style="background-color:#48cae4;overflow-x: hidden;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+  
+  
+<div class="row" style="padding: 10px;">
+  <div class="col-sm-8" style=" margin-left: 20px;color: white; margin-right: 20px; background-color: #457b9d;width: 600px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="cars" style="font-size: x-large;margin-left: 300px;" >Upload File</label>
+        {{ form|crispy }}
+        <br>
+        <button type="submit" class="btn btn-primary" style=" margin-left: 260px;">Upload file</button>
+      </form>
+  </div>
+</div>
+<br>
+<br>
+{% endblock content %}

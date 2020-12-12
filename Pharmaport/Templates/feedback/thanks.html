@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}Thank you{% endblock %}
+
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'feedback/thanks.css'%}">
+<div class="container" id="con">
+<div class="card text-center">
+  <div class="card-body" style="height: 350px">
+    <h1 class="card-title">Thank you!</h1>
+    <p class="card-text">Your feedback is very valuable to us !!!</p>
+    <a href="{% url 'feedback:home' %}" class="btn btn-primary" id="button">Respond again</a>
+  </div>
+  <div class="card-footer text" id="footer">
+      <a  href="{%url 'index'%}" class="btn btn-dark" >Continue to homepage</a>
+  </div>
+</div>
+</div>
+{% endblock %}

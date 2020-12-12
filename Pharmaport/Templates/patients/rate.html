@@ -1,0 +1,59 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %} 
+<body onload="myMove()" style="background-color:#48cae4;overflow-x: hidden;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="row" style="padding: 10px;">
+    
+
+    <div class="col-sm-8" style=" margin-left: 20px;color: white; margin-right: 20px; background-color: #457b9d;width: 600px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+        
+        <form method="post" action="" role="form" class="col s12">
+            {% csrf_token %}
+        <label for="cars" style="font-size: x-large;margin-left: 300px;" >Fill the form </label>
+        <div class="input-field col s12">
+            <span  style="font-size: large;">Enter Doctor ID :</span>
+            <input id="cont"type="text" class="form-control" name="doctor_id">
+            <span  style="font-size: large;">Enter Doctor Name :</span>
+            <input id="cont"type="text" class="form-control" name="docname">
+            <span  style="font-size: large;">Enter Doctor Hospital :</span>
+            <input id="cont"type="text" class="form-control" name="hospital">
+            <span  style="font-size: large;">Enter Doctor Rating :</span><br><br>
+            <!-- <input id="cont"type="text" class="form-control" name="rating"> -->
+            {{ form.rating }}<br><br>
+            <span  style="font-size: large;">FeedBack :</span>
+            <input id="cont"type="text" class="form-control" name="feedback">
+            <br>
+        </div>
+        <!-- <div class="input-field col s12">
+            {{ form.docname }}
+        </div>
+        <div class="input-field col s12">
+            {{ form.hospital}}
+        </div>
+        <div class="input-field col s12">
+            {{ form.rating }}
+        </div>
+        <div class="input-field col s12">
+            {{ form.feedback }} 
+            <label for="textarea1">Opinion</label>
+        </div> -->
+
+        <button type="submit" name="action" class="waves-effect waves-light btn" style="color: white;margin-left: 280px">Submit</button>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<br>
+{% endblock content %}
