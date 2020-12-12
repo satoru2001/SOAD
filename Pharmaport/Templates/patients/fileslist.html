@@ -1,0 +1,95 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %} 
+<body onload="myMove()" style="background-color:#48cae4;overflow-x: hidden;">
+<br><br><br><br><br><br><br><br>
+
+<div class="row" style="padding: 10px;">
+  <div class="col-sm-8" style=" margin-left: 20px;color: white; margin-right: 20px; background-color: #457b9d;width: 600px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+  
+      <h2>Upload Medical Files</h2>
+      <p>
+        <a href="{% url 'users_page:uploadfile' %}" class="btn btn-primary">Upload file</a>
+      </p>
+
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th style="color: white;">FileName</th>
+          <th style="color: white;">Date</th>
+          <th style="color: white;">Download</th>
+          <th style="color: white;">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+          <tr>
+            <td style="color: white;">{{ file.name }}</td>
+            <td style="color: white;">{{ file.date }}</td>
+            <td>
+              <a href="{{ file.uploadedfiles.url }}" class="btn btn-primary btn-sm" target="_blank">
+                Download File
+              </a>
+            </td>
+            <td>
+              <form method="post" action="{% url 'users_page:delete_file' file.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-3" style="margin-left: 20px; margin-right: 20px; background-color: #457b9d; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+    <a href="{% url 'users_page:otp' %}" style="position:relative; left:10px; top:30px;"><h4>Click to generate passcode</h4></a><br>
+    {% if passcode %}
+    <p style="color:white">{{passcode}} is your otp</p>
+    {% endif %}
+    <a href="{% url 'users_page:Rate' %}" class="waves-effect waves-light btn" style="color: white; position:relative; left:30px; top:0px;">Rate Doctors</a>
+  </div>
+</div>
+<br>
+<div class="row" style="padding: 10px;">
+  
+  <div class="col-sm-12" style=" margin-left: 20px; margin-right: 20px; background-color: #457b9d; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+
+    <table class="table mb-1">
+      <thead>
+        <tr>
+          <th style="color: white;">Date</th>
+          <th style="color: white;">DocName</th>
+          <th style="color: white;">Company</th>
+          <th style="color: white;">medicine_1</th>
+          <th style="color: white;">medicine_2</th>
+          <th style="color: white;">medicine_3</th>
+          <th style="color: white;">medicine_4</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pres in prescription %}
+          <tr>
+            <td style="color: white;">{{ pres.date}}</td>
+            <td style="color: white;">{{ pres.doc_name}}</td>
+            <td style="color: white;">{{ pres.comp}}</td>
+            <td style="color: white;">{{ pres.medicine_1}}</td>
+            <td style="color: white;">{{ pres.medicine_2}}</td>
+            <td style="color: white;">{{ pres.medicine_3}}</td>
+            <td style="color: white;">{{ pres.medicine_4}}</td>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>
+</body>
+{% endblock content %}

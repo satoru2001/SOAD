@@ -1,0 +1,533 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/a.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2}
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+
+<body onload="myMove()" style="background-color:#48cae4;overflow-x: hidden;">
+<br><br><br><br><br><br>
+<!--
+<div>
+    <table>
+        <tr>
+        <th>patient</th>
+        <th>Time</th>
+        </tr>
+
+
+        <th>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+
+        </th>
+        <th>
+            <p>19:10</p>
+        </th>
+    </table>
+</div>
+-->
+{% if errors%}
+<br><br><br><br><br><br><br><br><br><br>
+<h1 style="text-align:center;">{{errors}}</h1>
+<br><br><br><br><br><br><br><br><br>
+{% endif %}
+{% if not errors%}
+  <div class="row">
+
+  <div class="col-sm-10">
+
+  </div>
+    <div class="col-sm-2">
+
+      <table style="font-size: large;">
+          <tr style="color: white;">
+          <th>Doctor Name</th>
+          <th>&nbsp &nbsp &nbsp</th>
+          <th>Doctor Id</th>
+          </tr>
+          <tr style="color: black;">
+              <td>{{request.user.userprofileinfo.full_name}}</td>
+              <td>&nbsp &nbsp &nbsp</td>
+              <td>{{request.user.userprofileinfo.doctor_id}}</td>
+          </tr>
+      </table>
+      </div>
+    </div>
+
+  <!--
+  <div style=" border-radius: 20px;background-color: rgba(41, 48, 80, 0.733); text-align: center; margin: auto; width: 1600px; height: 500px;">
+
+  <p style="font-family: 'Quicksand', sans-serif;font-size: x-large; color: rgb(255, 255, 255); padding-top: 100px;" >  Welcome Doctor!!</p>
+  </div>
+  -->
+  <div style="margin: 20px; color: white;padding-left: 30px;background-color: #457b9d;width:1200px; border-radius: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+  <br>
+  <div class="row">
+  <div class = "col-lg-6" style="width:600px">
+    <form method="POST">
+    {% csrf_token %}
+    <label for="cars" style="font-size: x-large;" >Choose an option:</label>
+  <div class="form-group" style="width: 500px;">
+    <span  style="font-size: large;">Enter patient username:</span>
+    <input id="cont"type="text" class="form-control" name="id_temp">
+    <span  style="font-size: large;">OTP:</span>
+    <input id="cont"type="text" class="form-control" name="otp">
+  </div>
+  <button type="submit" class="btn btn-light btn-sm" name="button">Connect</button>  
+  </form>
+  <form method="POST">
+   {% csrf_token %}
+    {{multi.as_p}}
+  </form>
+<br><br>
+</div>
+&nbsp &nbsp &nbsp
+<div class="col-lg-5" style="width:100px">
+  <form method="POST">
+    {% csrf_token %}
+    <label for="cars" style="font-size: x-large;" >Choose an option:</label>
+  <div class="form-group" style="width: 500px;">
+    <span  style="font-size: large;">Enter patient username:</span>
+    <input id="cont"type="text" class="form-control" name="id_temp_1">
+  </div>
+  {{test_1.cars}}
+  <br>
+  <br>
+  <button type="submit" class="btn btn-light btn-sm" name="button">Connect</button>  
+  </form>
+  <br>
+  </div>
+  </div>
+    </div>
+    
+  <div class="row" style="padding-top: 50px; padding-left: 10px;" >
+
+    {% ifequal type 'a'%}
+    <div class="col-sm-7" style="  background-color: #213869f3;color: white; border-radius: 10px; margin-left: 20px; margin-right: 20px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    
+      <br>
+      <p style="font-size:xx-large;text-align: center;">Prescriptions available upon the requested patient ID:</p>
+      <div  style="overflow: auto; height: 400px;">
+      {% if view_pres == None%}
+      <p style=" padding-top: 90px;font-size: x-large;font-family: 'Bitter', serif;">Seems like there's no Patient Id given</p>
+      {% else %}
+        {% for j in view_pres %}
+      <p style="text-align: center;"> Patient: {{j.pa_id}} , of age {{j.age_1}} consulted doctor {{j.doc_name}} with complications as mentioned {{j.comp}} and was prefered the following meds {{j.medicine}}.</p>
+      {% endfor %}
+      
+      {% endif %}
+      </div>
+    </div>
+      {% endifequal %}
+
+      {% ifequal type 'b'%}
+      <div class="col-sm-7" style="  background-color: #61bdc0; border-radius: 10px; margin-left: 20px; margin-right: 20px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    
+      <br>
+      <p style="text-align: center;font-size: x-large;color: white;">{{te}}</p>
+      
+      {% ifnotequal ty.qw ''%}
+        <form method="POST" >
+          <p id="det" style="font-family: 'Assistant', sans-serif; font-size:large;"><b>To Sumbit the prescription use the following form :</b> </p>
+            {% csrf_token %}
+      
+        
+    
+              <div class="form-group">
+                <span >&nbsp Enter the patient ID as mentioned during registration</span>
+                <input id="cont"type="text" class="form-control" name="pa_id" value={{ty.qw}} required>
+              </div>
+    
+              <div class="form-group">
+                <span >&nbsp Enter the Age of the patient</span> <br>
+                <input id="cont"type="number" class="form-control" name="age_1"  required>
+              </div>
+                
+              <div class="form-group">
+                <span >&nbsp Please Provide Doctor ID</span>
+                <input id="cont"type="text" class="form-control" name="doc_name" value={{request.user.userprofileinfo.doctor_id}} required>
+              </div>
+    
+              <div class="form-group">
+                <span >&nbsp Describe patient's complaint</span>
+                <input id="cont"type="text" class="form-control" name="comp" required>
+              </div>
+    
+
+              <table>
+                <tr>
+
+                <td>
+                  <div class="form-group" style="width: 600px;">
+                    <span >&nbsp Medicine 1 Prescription </span>
+                    <input id="cont"type="text" class="form-control" name="medicine" required>
+                  </div>
+  
+                </td>
+                <td>
+                  <p>&nbsp Morning</p>
+                  &nbsp {{form.me_ch_mrg}}
+                </td>
+                <td>
+                  <p>&nbsp AfterNoon</p>
+                  &nbsp {{form.me_ch_an}}
+                </td>
+                <td>
+                  <p>&nbsp Night&nbsp </p>
+                  &nbsp {{form.me_ch_n}}
+                </td>
+                <td>
+                  <div class="form-group">
+                    <span >&nbsp &nbsp  Enter the tablet count</span>
+                    &nbsp &nbsp <input id="cont"type="number" class="form-control" name="med_co" required >
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+
+                <td>
+                  <div class="form-group" style="width: 600px;">
+                    <span >&nbsp Medicine 2 Prescription </span>
+                    <input id="cont"type="text" class="form-control" name="medicine_1" >
+                  </div>
+  
+                </td>
+                <td>
+                  <p>&nbsp Morning</p>
+                  &nbsp {{form.me_ch_1_mrg}}
+                </td>
+                <td>
+                  <p>&nbsp AfterNoon</p>
+                  &nbsp {{form.me_ch_1_an}}
+                </td>
+                <td>
+                  <p>&nbsp Night&nbsp </p>
+                  &nbsp {{form.me_ch_1_n}}
+                </td>
+                <td>
+                  <div class="form-group">
+                    <span >&nbsp &nbsp  Enter the tablet count</span>
+                    &nbsp &nbsp <input id="cont"type="number" class="form-control" name="med_1_co"  >
+                  </div>
+                </td>
+              </tr>
+
+              
+              <tr>
+
+                <td>
+                  <div class="form-group" style="width: 600px;">
+                    <span >&nbsp Medicine 3 Prescription </span>
+                    <input id="cont"type="text" class="form-control" name="medicine_2" >
+                  </div>
+  
+                </td>
+                <td>
+                  <p>&nbsp Morning</p>
+                  &nbsp {{form.me_ch_2_mrg}}
+                </td>
+                <td>
+                  <p>&nbsp AfterNoon</p>
+                  &nbsp {{form.me_ch_2_an}}
+                </td>
+                <td>
+                  <p>&nbsp Night&nbsp </p>
+                  &nbsp {{form.me_ch_2_n}}
+                </td>
+                <td>
+                  <div class="form-group">
+                    <span >&nbsp &nbsp  Enter the tablet count</span>
+                    &nbsp &nbsp <input id="cont"type="number" class="form-control" name="med_2_co"  >
+                  </div>
+                </td>
+              </tr>
+
+
+
+              <tr>
+
+                <td>
+                  <div class="form-group" style="width: 600px;">
+                    <span >&nbsp Medicine 4 Prescription </span>
+                    <input id="cont"type="text" class="form-control" name="medicine_3" >
+                  </div>
+  
+                </td>
+                <td>
+                  <p>&nbsp Morning</p>
+                  &nbsp {{form.me_ch_3_mrg}}
+                </td>
+                <td>
+                  <p>&nbsp AfterNoon</p>
+                  &nbsp {{form.me_ch_3_an}}
+                </td>
+                <td>
+                  <p>&nbsp Night&nbsp </p>
+                  &nbsp {{form.me_ch_3_n}}
+                </td>
+                <td>
+                  <div class="form-group">
+                    <span >&nbsp &nbsp  Enter the tablet count</span>
+                    &nbsp &nbsp <input id="cont"type="number" class="form-control" name="med_3_co"  >
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  <div class="form-group" style="width: 600px;">
+                    <span >&nbsp Medicine 5 Prescription </span>
+                    <input id="cont"type="text" class="form-control" name="medicine_4" >
+                  </div>
+  
+                </td>
+                <td>
+                  <p>&nbsp Morning</p>
+                  &nbsp {{form.me_ch_4_mrg}}
+                </td>
+                <td>
+                  <p>&nbsp AfterNoon</p>
+                  &nbsp {{form.me_ch_4_an}}
+                </td>
+                <td>
+                  <p>&nbsp Night&nbsp </p>
+                  &nbsp {{form.me_ch_4_n}}
+                </td>
+                <td>
+                  <div class="form-group">
+                    <span >&nbsp &nbsp  Enter the tablet count</span>
+                    &nbsp &nbsp <input id="cont"type="number" class="form-control" name="med_4_co"  >
+                  </div>
+                </td>
+              </tr>
+
+
+
+              </table>
+
+                
+
+
+                
+      
+            <br>
+            
+            <button id="sufb" type="submit" class="btn btn-secondary btn-sm" name="button">Submit the Response</button>
+
+    
+    
+            </form>
+            {% endifnotequal %}
+           
+          </div>
+          {% endifequal %}
+          {% ifequal type 'c'%}
+          <div class="col-sm-7" style="  background-color: #213869f3;color: white; border-radius: 10px; text-align: center;margin-left: 20px; margin-right: 20px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          
+          <br>
+              <p style="font-size: x-large; text-align: center; padding-top: 50px;">
+                Selected Form will be listed here after selection. 
+              </p>
+            <br>
+          </div>
+            {% endifequal %}
+      
+
+        <div class="col-sm-4" style="background-color: #61bdc0;color: white; text-align: center;border-radius: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <br>
+          <p style="font-size: x-large;">Upcoming Apointments:</p>
+          <div style="overflow: auto; height: 400px;">
+          {% for u in next %}
+          <p>{{u.pat_id_1}} , has apointed an apointment for tomorrow.</p>
+          {% endfor %}
+          <br>
+          </div>
+          </div>
+      </div>
+
+
+    <br>
+
+
+
+
+
+
+
+
+
+
+      <div class="row" style="padding: 10px;">
+        <div class="col-sm-7" style=" margin-left: 20px; margin-right: 20px; background-color: #213869f3; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 10px;">
+        <br><br><br>
+        {% ifequal type1 'c' %}
+        <h3 style="color:white;text-align:center"> Reports will be displayed here</h3>
+        {% endifequal %}
+        {% ifequal type1 'a' %}
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Metadata</th>
+                <th>date</th>
+                <th>url</th>
+              </tr>
+
+              {% for i in reports_data %}
+              <tr>
+              <td>{{ i.name }}</td>
+              <td>{{i.metadata}}</td>
+              <td>{{i.date}}</td>
+              <td><a href="{{i.uploadedfiles.url}}">Report</a></td>
+              </tr>
+              {% endfor %}
+            </table>
+        {% endifequal %}
+
+        {%ifequal type1 'b'%}
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-group" style="color:white">
+              <span >&nbsp Name </span>
+              <input id="cont" type="text" class="form-control" name="name" >
+            </div>
+            <div class="form-group" style="color:white">
+              <span >&nbsp Meta data </span>
+              <input id="cont" type="text" class="form-control" name="metadata" >
+            </div>
+            <div class="form-group" style="color:white">
+              <span >&nbsp File </span>
+              <input type="file" id="myfile" name="uploadedfiles">
+            </div>
+            <input id="cont" type="hidden" class="form-control" name="pa_id" value={{ty.qw}} required>
+            
+          <button type="submit" class="btn btn-light btn-sm" name="button">Connect</button>  
+          </form>        
+        {% endifequal %}
+    </div>
+    <div class="col-sm-4" style="background-color: #023047;text-align: center; color: white; border-radius: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"> 
+    <br>
+      <p style="font-size: x-large;" id='demo'>  </p>
+      <br>
+      <p style="font-size: x-large;">Consulted patients details</p>
+      <div style="overflow: auto; height: 300px;">
+      {% for i in pat %}
+      <p>{{i.pa_id}}  with complaint {{i.comp}}</p>
+      {% endfor %}
+    </div>
+    <br>
+    </div>
+    </div>
+    <br>
+
+      
+
+
+
+
+      <div class='container-fluid'>
+        <div class=row>
+          <div class="col-sm-3" style="padding-top: 20px; margin-left: 20px;background-color: #2f6690; border-radius: 10px; color: white;" >
+
+         
+    <p style="font-size: x-large; text-shadow: black;">Fill the Form to place an apointment:</p>
+    
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <span >&nbsp Enter the patient id</span>
+            <input id="cont"type="text" class="form-control" name="pat_id_1" required>
+          </div>
+          <div class="form-group">
+            <span >&nbsp Enter the apointment Date</span>
+            <input id="cont"type="date" class="form-control" name="date_filed" required>
+          </div>
+          <div class="form-group">
+            <span>&nbsp Enter the time of apointment </span>
+            <input type="time" class="form-control" name="time_filed" required>
+          </div>
+          <br>
+        <button id="sufb" type="submit" class="btn btn-outline-info btn-sm" style="color:black;background-color:white" name="button">Submit the Response</button>
+      </form>      
+      </div>
+    </div>
+    </div>
+
+{% endif %}
+<br><br>
+<!--
+<form method="POST">
+  {% csrf_token %}
+  {{ form_3.as_p }}
+  <button id="sufb" type="submit" class="btn btn-secondary" name="button">Submit the Response</button>
+</form> 
+-->
+<input type="hidden" id="test_val"  value={{tot_con}}>
+<script>
+  function myMove() {
+    var elem = 0;  
+    var pos = document.getElementById("test_val").value;
+    var id = setInterval(frame, 180);
+    function frame() {
+      if (elem == pos) {
+        clearInterval(id);
+      } else {
+        elem++;
+        document.getElementById("demo").innerHTML ="Total patients Consulted : "+elem;
+  
+      }
+    }
+  }
+  </script>
+
+<script>
+  function mytest(){
+  alert('heai');
+  var store = document.getElementById('id_temp').value;
+  document.getElementById('store_1') = store;
+  alert(store);
+  console.log(store);
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+{% endblock content %}
+
+  
+  

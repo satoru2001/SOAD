@@ -1,0 +1,210 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block  content%}
+<style>
+.register-photo {
+    background: #8E24AA;
+    padding: 80px 0
+}
+
+
+
+.register-photo .image-holder {
+    display: table-cell;
+    width: auto;
+    background: url("{% static '/images/bg-04.jpg' %}");
+    background-size: cover
+}
+
+.register-photo .form-container {
+    display: table;
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1)
+}
+
+.register-photo form {
+    display: table-cell;
+    width: 400px;
+    background-color: #ffffff;
+    padding: 40px 60px;
+    color: #505e6c
+}
+
+
+.register-photo form h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 30px
+}
+
+.register-photo form .form-control {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #dfe7f1;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+    text-indent: 6px;
+    height: 40px
+}
+
+.register-photo form .form-check {
+    font-size: 13px;
+    line-height: 20px
+}
+
+.register-photo form .btn-primary {
+    background: #8E24AA;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 35px;
+    text-shadow: none;
+    outline: none !important
+}
+
+.register-photo form .btn-primary:hover,
+.register-photo form .btn-primary:active {
+    background: #8E24AA
+}
+
+.register-photo form .btn-primary:active {
+    transform: translateY(1px)
+}
+
+.register-photo form .already {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #6f7a85;
+    opacity: 0.9;
+    text-decoration: none
+}
+
+
+</style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+        rel="stylesheet">
+    <!-- Plugins Stylesheets -->
+    <link rel="stylesheet" href="{% static "assets/css/loader/loaders.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/font-awesome/font-awesome.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/bootstrap.css"%}">
+    <link rel="stylesheet" href="{% static "assets/css/aos/aos.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/swiper/swiper.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/lightgallery.min.css"%}">
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/style.css"%}">
+    <!-- Responsive Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/responsive.css"%}">
+
+   <br><br><br><br><br><br>
+   {% if registered%}
+                   <h1 style="height:500px;text-align:center;"><span style="margin:auto">Thank you for responding go to <a href="{% url 'Register:user_login' %}">for login</a></span></h1>
+       {% else %}
+       <div class="register-photo">
+           <div class="form-container">
+               <div class="image-holder"></div>
+               <form method="POST">
+                {% csrf_token %}
+                
+                <h2>Create a new account </h2>
+                <label>User Name:</label><br>
+               {% render_field user_form.username class="form-control" placeholder="User Name" %}<br>
+                <label>Full Name:</label><br>
+                {% render_field profile_form.full_name class="form-control" placeholder="Full Name" %}<br>
+                <label>Date Of Birth:</label><br>
+                {{ profile_form.dob }}<br><br>
+                <label>Phone Number:</label><br>
+                {% render_field profile_form.phone_number class="form-control" placeholder="Phone Number" %}<br>
+                <label>Address:</label><br>
+                {% render_field profile_form.Area class="form-control" placeholder="Address" %}<br>
+                <label>Email:</label><br>
+                {% render_field user_form.email class="form-control" placeholder="Email" %}<br>
+                <label>Password:</label><br>
+                {% render_field user_form.password class="form-control" placeholder="Password" %}<br>
+                <label>Verify Password:</label><br>
+                {% render_field user_form.verify_password class="form-control" placeholder="Verify Password" %}<br>
+                
+
+                <div class="form-group">
+                    <label for="otherField" >Are you a doctor ? </label><br>
+                    
+                    <select class="form-control" id="seeAnotherField">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group" id="otherFieldDiv">
+                    <label for="otherField">Doctor ID :</label>
+                    
+                    {% render_field profile_form.doctor_id class="form-control" placeholder="Doctor id" %}<br>
+    
+                  </div><br>
+                  
+                  <div class="g-recaptcha" data-sitekey="6LdkdgMaAAAAAPbqzJlsxRA_9VM4wcdH1jI3u35f"></div>
+                  <br>
+                   <button type="submit">Register</button>
+               </form>
+           </div>
+       </div>
+       {% endif %}
+
+       <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+       <script type="text/javascript"
+       src="jquery-ui-1.10.0/tests/jquery-1.9.0.js"></script>
+   <script src="jquery-ui-1.10.0/ui/jquery-ui.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <script>
+        $("#seeAnotherField").on('change',function() {
+          if ($(this).val() == "yes") {
+            $('#otherFieldDiv').show();
+            $('#otherField').attr('required', '');
+            $('#otherField').attr('data-error', 'This field is required.');
+          } else {
+            $('#otherFieldDiv').hide();
+            $('#otherField').removeAttr('required');
+            $('#otherField').removeAttr('data-error');
+          }
+        });
+        $("#seeAnotherField").trigger("change");
+        
+        $("#seeAnotherFieldGroup").on('change',function() {
+          if ($(this).val() == "yes") {
+            $('#otherFieldGroupDiv').show();
+            $('#otherField1').attr('required', '');
+            $('#otherField1').attr('data-error', 'This field is required.');
+            $('#otherField2').attr('required', '');
+            $('#otherField2').attr('data-error', 'This field is required.');
+          } else {
+            $('#otherFieldGroupDiv').hide();
+            $('#otherField1').removeAttr('required');
+            $('#otherField1').removeAttr('data-error');
+            $('#otherField2').removeAttr('required');
+            $('#otherField2').removeAttr('data-error');
+          }
+        });
+        $("#seeAnotherFieldGroup").trigger("change");
+        
+        
+        </script>       
+{% endblock content%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,243 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Document title -->
+    <title>PharmaPort</title>
+    <!-- Stylesheets & Fonts -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+        rel="stylesheet">
+    <!-- Plugins Stylesheets -->
+    <link rel="stylesheet" href="{% static "assets/css/loader/loaders.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/font-awesome/font-awesome.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/bootstrap.css"%}">
+    <link rel="stylesheet" href="{% static "assets/css/aos/aos.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/swiper/swiper.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/lightgallery.min.css"%}">
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/style.css"%}">
+    <!-- Responsive Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/responsive.css"%}">
+</head>
+
+<body>
+    <!-- Loader Start -->
+    <div class="css-loader">
+        <div class="loader-inner line-scale d-flex align-items-center justify-content-center"></div>
+    </div>
+    <!-- Loader End -->
+    <!-- Header Start -->
+    <header class="position-absolute w-100">
+        <div class="container">
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
+                <div class="contact">
+                    <a href="tel:+1234567890" class="tel"><i class="fa fa-phone" aria-hidden="true"></i>+1234567890</a>
+                    <a href="mailto:info@yourmail.com"><i class="fa fa-envelope"
+                            aria-hidden="true"></i>info@yourmail.com</a>
+                </div>
+                <nav class="d-flex aic">
+                 {% if user.is_authenticated %}
+                  <li><a class="login" href="{% url 'users_page:fileslist' %}">Hi ,{{user.username}}</a></li>
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <li><a class="login" href="{% url 'Register:logout' %}">Logout</a></li>
+      
+                {% else %}
+                <i class="fa fa-user" aria-hidden="true"></i>
+                  <li><a class="navbar-link login" href="{% url 'Register:user_login' %}">Login</a></li>
+                {% endif %}
+                    <ul class="nav social d-none d-md-flex">
+
+                    </ul>
+                </nav>
+            </div>
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="{% url "home" %}"><h1><span style="color:red;">PHARMA</span>PORT</h1></a>
+                <div class="group d-flex align-items-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <a class="login-icon d-sm-none" href="{% url 'Register:user_login' %}"><i class="fa fa-user"></i></a>
+                </div>
+                <a class="search-icon d-none d-md-block" href="#"><i class="fa fa-search"></i></a>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users_page:fileslist' %}">User page</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Register:register' %}">Register</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'doctors:index_view' %}">Doctor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'donate:index'%}">Payment</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'feedback:home'%}">Contact us</a></li>
+                    </ul>
+                    <form class="bg-white search-form" method="get" id="searchform">
+                        <div class="input-group">
+                            <input class="field form-control" id="s" name="s" type="text" placeholder="Search">
+                            <span class="input-group-btn">
+                                <input class="submit btn btn-primary" id="searchsubmit" name="submit" type="submit"
+                                    value="Search">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Header End -->
+    <!-- Hero Start -->
+    {% comment %} <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 offset-md-1 col-md-11">
+                    <div class="swiper-container hero-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide slide-content d-flex align-items-center">
+                                <div class="single-slide">
+
+                                    <h1 data-aos="fade-right" data-aos-delay="200"><br> New era -New innovation
+                                    </h1>
+                                    <p data-aos="fade-right" data-aos-delay="600">Trend setting documentation, Easy storage for the Next-Gen.
+                                    </p>
+
+                                    <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Upload Now</a>
+                                    <!-- <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Get
+                                        Now</a> -->
+                                </div>
+                            </div>
+                            <div class="swiper-slide slide-content d-flex align-items-center">
+                                <div class="single-slide">
+                                  <h1 data-aos="fade-right" data-aos-delay="200"><br> PharmaPort
+                                  </h1>
+                                  <p data-aos="fade-right" data-aos-delay="600">We Care For You, <br>
+                                  </p>
+
+                                    <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Upload Now</a>
+                                    <!-- <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Get
+                                        Now</a> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Add Control -->
+            <span class="arr-left"><i class="fa fa-angle-left"></i></span>
+            <span class="arr-right"><i class="fa fa-angle-right"></i></span>
+        </div>
+        <div class="texture"></div>
+        <div class="diag-bg"></div>
+    </section> {% endcomment %}
+    <!-- Hero End -->
+    {% block content %}
+
+    {% endblock content %}
+    <!-- Footer Start -->
+    <footer>
+            <!-- Foot Note Start -->
+        <!-- <div class="foot-note">
+            <div class="container">
+                <div
+                    class="footer-content text-center text-lg-left d-lg-flex justify-content-between align-items-center">
+                    <p class="mb-0" data-aos="fade-right" data-aos-offset="0">&copy; 2019 All Rights Reserved. Design by <a href="https://freehtml5.co/multipurpose" target="_blank" class="fh5-link">FreeHTML5.co</a>.</p>
+                    <p class="mb-0" data-aos="fade-left" data-aos-offset="0"><a href="#">Terms Of Use</a><a
+                            href="#">Privacy & Security
+                            Statement</a></p>
+                </div>
+            </div>
+        </div> -->
+        <!-- Foot Note End -->
+
+
+        <!-- .... -->
+        <!-- /#contents -->
+        <div id="footer">
+          <div>
+            <ul id="links">
+              <li>
+                <h4>Our Services</h4>
+                <ul>
+                  <li>
+                    <a href="index.html">Doctor Portal</a>
+                  </li>
+                  <li>
+                    <a href="index.html">User Portal</a>
+                  </li>
+                  <li>
+                    <a href="index.html">Order</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>Know Us</h4>
+                <ul>
+                  <li>
+                    <a href="index.html">Contact us</a>
+                  </li>
+                  <li>
+                    <a href="index.html">Business Policies</a>
+                  </li>
+                  <li>
+                    <a href="index.html">About Us</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>FAQ's</h4>
+                <ul>
+                  <li>
+                    <a href="index.html">Payment Issues</a>
+                  </li>
+                  <li>
+                    <a href="index.html">Terms and Conditions</a>
+                  </li>
+                  <li>
+                    <a href="index.html">Privacy Policy</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>Social Links</h4>
+                <ul id="connect">
+                  <li>
+                    <a href="#" target="_blank" class="twitter">Twitter</a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank" class="facebook">Facebook</a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank" class="googleplus">Google +</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- /#links -->
+            <p class="footnote">
+              © Copyright 2023.Company name all rights reserved
+            </p>
+          </div>
+        </div>
+
+
+    </footer>
+    <!-- Footer Endt -->
+
+      <!--jQuery-->
+    <script src="{%static "assets/js/jquery-3.3.1.js"%}"></script>
+    <!--Plugins-->
+    <script src="{%static "assets/js/bootstrap.bundle.js"%}"></script>
+    <script src="{%static "assets/js/loaders.css.js"%}"></script>
+    <script src="{%static "assets/js/aos.js"%}"></script>
+    <script src="{%static "assets/js/swiper.min.js"%}"></script>
+    <script src="{%static "assets/js/lightgallery-all.min.js"%}"></script>
+    <!--Template Script-->
+    <script src="{%static "assets/js/main.js"%}"></script>
+</body>
+
+</html>

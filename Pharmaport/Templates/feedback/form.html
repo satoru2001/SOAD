@@ -1,0 +1,86 @@
+{% extends 'home/base.html'%}
+{% load static %}
+{% block content  %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static 'feedback/feedback.css'%}">
+  <br><br><br><br><br><br>
+  <div class="body">
+    <div class="section animated bounceInLeft">
+      <div id="contactME" class="main">
+        <h1 id ="extra">CONTACT US</h1>
+        <p><h4 style="color:#676767"><em>We would love to hear your thoughts, concerns or problems with anything so we can improve!</em></h4></p>
+        <hr class="new" align="left">
+        <form  method="POST" class="needs-validation" id="main_from" novalidate >
+            {% csrf_token %}
+        <label id="extra"><h2>Feedback Type</h2></label>
+                <div class="form-group" id = "extra">
+                    <div class="form-check form-check-inline" id="checkbox">
+                        <input class="form-check-input" type="checkbox" name="Is_Suggestion" >
+                        <label class="form-check-label" ><h5>Suggestion</h5></label>
+                    </div>
+                    <div class="form-check form-check-inline" id="checkbox">
+                        <input class="form-check-input" type="checkbox" name="Is_Bug">
+                        <label class="form-check-label"><h5>Bug report</h5></label>
+                    </div>
+                    <div class="form-check form-check-inline" id="checkbox">
+                        <input class="form-check-input" type="checkbox" name="Is_Question">
+                        <label class="form-check-label" ><h5>Question</h5></label>
+                    </div>
+                </div>
+
+        <div class= "field form-group">
+            <input name="user_name" class="form-control" type="text" id="name" placeholder="Who Are You?"required/>
+            <label for="name">Name</label>
+            <div class="valid-feedback"><h5>Looks good!</h5></div>
+            <div class="invalid-feedback"><h5>Please enter your Name </h5></div>
+        </div>
+
+        <div class="field form-group">
+            <input type= "text"  class="form-control" id="email" name="user_mail" placeholder="name@email.com" required/>
+            <label for="email">Email</label>
+            <div class="valid-feedback"><h5>Looks good!</h5></div>
+            <div class="invalid-feedback"><h5>Please enter your Email</h5> </div>
+            <h5 style="color:#676767"><em>We'll never share your email with anyone else.</em><h5>
+        </div>
+
+        <div class="field form-group">
+            <textarea name="user_text" type="text"id="msg" rows="6" cols="30" class="form-control" required placeholder="Your message goes here..."/></textarea>
+            <label for="msg">Describe Feedback</label>
+            <div class="valid-feedback"><h5>Looks good!</h5></div>
+            <div class="invalid-feedback"><h5>Please enter any message</h5> </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="but">Submit</button>
+    
+  </form>
+</div>
+</div>
+</div>
+
+<script>
+
+    $("#main_from").submit(function(event) {
+
+    // make selected form variable
+    var vForm = $(this);
+    //If not valid prevent form submit
+    if (vForm[0].checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    } 
+    // Add bootstrap 4 was-validated classes to trigger validation messages
+    vForm.addClass('was-validated'); 
+ 
+});
+    
+</script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+<script  src="{% static 'scripts/function.js'%}"></script>
+
+{% endblock content%}

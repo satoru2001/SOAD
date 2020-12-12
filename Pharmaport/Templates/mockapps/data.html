@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mock apps</title>
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+{{form.errors}}
+<form method="post">{% csrf_token %}
+  
+  <h1 class="h3 mb-3 font-weight-normal">Report of patient retrival</h1>
+
+  <table>
+    <thead>
+        <tr>
+            <th>FIELDS</th>
+            <th>VALUES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in form%}
+        <tr>
+            <td>{{field.label_tag}}</td>
+            <td>{{field}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+  <button type="submit">submit</button>
+</form>
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Metadata</th>
+            <th>Date</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in b %}
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.metadata}}</td>
+            <td>{{i.date_created}}</td>
+            <td>{{i.file_url}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

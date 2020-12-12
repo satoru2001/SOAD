@@ -1,0 +1,127 @@
+{% extends 'home/base.html' %}
+{% load static%}
+{% block content %}
+<style>
+
+.register-photo {
+    background: #f1f7fc;
+    padding: 80px 0
+}
+
+.register-photo .image-holder {
+    display: table-cell;
+    width: auto;
+    background: url("{% static 'images/bg-01.jpg' %}");
+    background-size: cover
+}
+
+.register-photo .form-container {
+    display: table;
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1)
+}
+
+.register-photo form {
+    display: table-cell;
+    width: 400px;
+    background-color: #ffffff;
+    padding: 40px 60px;
+    color: #505e6c
+}
+
+@media (max-width:991px) {
+    .register-photo form {
+        padding: 40px
+    }
+}
+
+.register-photo form h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 30px
+}
+
+.register-photo form .form-control {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #dfe7f1;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+    text-indent: 0px;
+    height: 40px
+}
+
+.register-photo form .form-check {
+    font-size: 13px;
+    line-height: 20px
+}
+
+.register-photo form .btn-primary {
+    background: green;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 35px;
+    text-shadow: none;
+    outline: none !important
+}
+
+.register-photo form .btn-primary:hover,
+.register-photo form .btn-primary:active {
+    background: green
+}
+
+.register-photo form .btn-primary:active {
+    transform: translateY(1px)
+}
+
+.register-photo form .already {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #6f7a85;
+    opacity: 0.9;
+    text-decoration: none
+}
+</style>
+
+    <!-- Document title -->
+    <!-- Stylesheets & Fonts -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+        rel="stylesheet">
+    <!-- Plugins Stylesheets -->
+    <link rel="stylesheet" href="{% static "assets/css/loader/loaders.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/font-awesome/font-awesome.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/bootstrap.css"%}">
+    <link rel="stylesheet" href="{% static "assets/css/aos/aos.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/swiper/swiper.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/lightgallery.min.css"%}">
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/style.css"%}">
+    <!-- Responsive Stylesheet -->
+    <link rel="stylesheet" href="{% static "assets/css/responsive.css"%}">
+
+   <br><br><br><br>
+    <div class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form method="post" action="{% url 'Register:user_login' %}">
+                {% csrf_token %}
+                <h2 class="text-center"><strong>SIGN</strong> IN</h2>
+                <div class="form-group"><input class="form-control" type="text" name="username" placeholder="username"></div>
+                <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                <br><br>
+                <div class="form-group">
+                    <input  class="btn btn-success btn-block" type="submit" value="Login">
+                </div>
+                <br><br><br><br><br><br><br><br><br><br>
+            </form>
+        </div>
+    </div>   
+{% endblock content%}

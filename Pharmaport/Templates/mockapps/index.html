@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mock apps</title>
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+{{form1.errors}}
+<form method="post">{% csrf_token %}
+  
+  <h1 class="h3 mb-3 font-weight-normal">Rating of Doctor Retrival</h1>
+
+  <table>
+    <thead>
+        <tr>
+            <th>FIELDS</th>
+            <th>VALUES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in form1%}
+        <tr>
+            <td>{{field.label_tag}}</td>
+            <td>{{field}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+  <button type="submit">submit</button>
+</form>
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Hospital</th>
+            <th>Rating</th>
+            <th>Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if t %}
+        {% for i in a %}
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.hospital_name}}</td>
+            <td>{{i.rating}}</td>
+            <td>{{i.recent_feedback}}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+    <tr>
+        <td>{{a.name}}</td>
+        <td>{{a.hospital_name}}</td>
+        <td>{{a.rating}}</td>
+        <td>{{a.recent_feedback}}</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+</body>
+</html>
