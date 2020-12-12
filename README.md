@@ -1,8 +1,7 @@
 # SOAD
-We present before you the Pharmaport website. (CAPTION : we care, for your health)
-I will walk you through all these contents one by one.
-Let me start off with the business plan or the problem from which the website has been born.
 
+We present before you the Pharmaport website. (we care, for your health)
+Business plan
 the website provides the facility to store all the medical records like prescriptions given by doctors, scanned copies of X-rays, CT-scan, MRI and everything related to reports of a person from birth to present in digital format.
 
 ## Example
